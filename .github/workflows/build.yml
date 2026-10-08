@@ -5,7 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: unzip -q StudySaathi-9.zip
+        with: { fetch-depth: 0 }
+      - run: unzip -q -o "$(git log -1 --format= --name-only --diff-filter=AM -- '*.zip' | head -1)"
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 17 }
       - run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
